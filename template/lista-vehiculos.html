@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>www.vezinosadmin.com.co</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Estilos propios -->
+    <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+    <link rel="shortcut icon" href="images/Logo.png" />
+</head>
+
+<body>
+
+    <div class="col-sm-6">
+        <a><img src="images/conj4.png"
+                style="height: 100px; width:auto;display:inline-block; vertical-align:middle;" /></a>
+        <h3 class="mb-0 font-weight-bold" style="margin-top: 1cm;">Conjunto Trapiches</h3>
+        <p>Calle 25 # 2-90</p>
+    </div>
+
+    <!-- Tabla principal -->
+    <div class="container mt-4">
+        <h3 class="mb-4">Listado de Vehículos por Vivienda</h3>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-bordered text-center align-middle">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Número de casa</th>
+                            <th>Cantidad de vehículos</th>
+                            <th style="width:60px;">Ver</th>
+                            <th style="width:60px;">Editar</th>
+                            <th style="width:60px;">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Casa 12</td>
+                            <td>2</td>
+                            <td>
+                                <!-- Botón que abre el modal -->
+                                <a href="#" class="text-info" data-bs-toggle="modal" data-bs-target="#modalCasa12">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                            <td><a href="#" class="text-primary"><i class="fas fa-edit"></i></a></td>
+                            <td><a href="#" class="text-danger"><i class="fas fa-trash-alt"></i></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Bootstrap 5 -->
+    <div class="modal fade" id="modalCasa12" tabindex="-1" aria-labelledby="modalCasa12Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCasa12Label">Información de Casa 12</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center align-middle">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Número de casa</th>
+                                    <th>Tipo de vehículo</th>
+                                    <th>Marca</th>
+                                    <th>Placa</th>
+                                    <th>Línea</th>
+                                    <th>Color</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Casa 12</td>
+                                    <td>Automóvil</td>
+                                    <td>Toyota</td>
+                                    <td>ABC123</td>
+                                    <td>Corolla</td>
+                                    <td>Blanco</td>
+
+                                </tr>
+                                <tr>
+                                    <td>Casa 12</td>
+                                    <td>Moto</td>
+                                    <td>Yamaha</td>
+                                    <td>XYZ987</td>
+                                    <td>FZ</td>
+                                    <td>Negro</td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Scripts propios -->
+    <script src="js/off-canvas.js"></script>
+    <script src="js/hoverable-collapse.js"></script>
+    <!-- <script src="js/template.js"></script> -->
+    <script src="js/settings.js"></script>
+    <script src="js/todolist.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="...bootstrap.bundle.min.js"></script>
+    <!-- Esto es Boopstrap 5 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+<style>
+  .modal-header {
+    background-color: #007bff !important; /* Azul Bootstrap */
+    color: white;
+  }
+</style>
+
+</html>

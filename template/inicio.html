@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <style>
+        .tarjetas {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .tarjeta {
+            background-color: #f6f7f8;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            /* ajusta según tu diseño */
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+
+        .tarjeta:hover {
+            transform: scale(1.05);
+        }
+
+        .tarjeta h2 {
+            color: #1e88e5;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <!-- <style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    header {
+        background-color: #f6f7f8;
+        color: #2c3e50;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .header-container {
+        display: flex;
+        /* coloca los elementos en fila */
+        align-items: center;
+        /* centra verticalmente */
+        justify-content: flex-start;
+        /* alinea a la izquierda */
+        gap: 20px;
+        /* espacio entre elementos */
+    }
+
+    .logo img {
+        max-height: 80px;
+        max-width: 100%;
+    }
+
+    .text-block {
+        flex: 1;
+        text-align: center;
+    }
+
+    .text-block h1 {
+        margin: 0;
+        font-size: 2em;
+        color: #2c3e50;
+    }
+
+    .text-block p {
+        margin: 5px 0 0;
+        color: #2c3e50;
+    }
+
+    nav {
+        background-color: #34495e;
+    }
+
+    nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    nav ul li {
+        margin: 0 15px;
+    }
+
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+        display: block;
+    }
+
+    nav ul li a:hover {
+        background-color: #545756;
+        border-radius: 5px;
+    }
+
+    footer {
+        background-color: #2c3e50;
+        color: white;
+        text-align: center;
+        padding: 15px;
+    };
+ 
+    .contenedor-ayuda {
+      width: 90vw;
+      max-width: 1000px;
+      margin: 40px auto;
+      text-align: center;
+    }
+</style> -->
+
+    <!-- linea para responsive en moviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- libreria de iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>www.vezinosadmin.com.co</title>
+    <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+    <link rel="shortcut icon" href="images/Logo.png" />
+    <link rel="stylesheet" href="app.js">
+</head>
+
+<body>
+    <div class="contenedor">
+        <div class="tarjetas">
+            <!-- Quienes Somos -->
+            <div class="tarjeta">
+                <h2><strong>Quiénes Somos</strong></h2>
+                <p>
+                    Somos una plataforma digital creada para fortalecer la seguridad, organización y convivencia en
+                    conjuntos
+                    residenciales. Nuestro equipo combina experiencia en desarrollo web y gestión comunitaria para
+                    ofrecer
+                    soluciones modernas y confiables. VEZINOS nace con el propósito de conectar administradores,
+                    residentes y
+                    visitantes en un sistema único, fácil de usar y accesible desde cualquier dispositivo.
+                </p>
+            </div>
+
+            <!-- Misión -->
+            <div class="tarjeta">
+                <h2><strong>Misión</strong></h2>
+                <p>
+                    Facilitar la gestión integral de comunidades residenciales mediante herramientas tecnológicas que
+                    optimicen
+                    procesos de seguridad, registro de visitantes, comunicación interna y análisis demográfico. Promover
+                    la
+                    confianza y la transparencia en la administración, garantizando un entorno seguro y organizado para
+                    todos los
+                    residentes.
+                </p>
+            </div>
+
+            <!-- Visión -->
+            <div class="tarjeta">
+                <h2><strong>Visión</strong></h2>
+                <ul>
+                    <li>Convertirnos en la aplicación líder en gestión comunitaria en Colombia y Latinoamérica,
+                        reconocida por su
+                        innovación, confiabilidad y aporte a la convivencia ciudadana.</li>
+                    <li>Ser un referente en soluciones digitales que transformen la manera en que las comunidades
+                        residenciales se
+                        organizan y se relacionan.</li>
+                </ul>
+            </div>
+
+            <!-- Imagen -->
+            <div class="tarjeta">
+                <img src="../template/images/ref1.jpg" alt="Logo2" style="width:100%; border-radius:10px;">
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<!-- <body>
+    <div class="contenedor-ayuda">
+        
+            <div class="col-md-6 mt-3">
+                <div style="background-color:#f6f7f8; padding:20px; border-radius:10px; width:100%;">
+                    <h2 style="text-align: center;"> <strong> Quienes Somos</strong></h2>
+                    <h5>Somos una plataforma digital creada para fortalecer la seguridad, organización y convivencia en
+                        conjuntos
+                        residenciales, nuestro equipo combina experiencia en desarrollo web y gestión comunitaria para
+                        ofrecer
+                        soluciones modernas
+                        y confiables, VEZINOS nace con el propósito de conectar administradores, residentes y visitantes
+                        en un
+                        sistema único,
+                        fácil de usar y accesible desde cualquier dispositivo.</h5>
+                </div>
+                <div class="mb-3 mb-xl-0 pr-1 mt-3"
+                    style="background-color:#f6f7f8; padding:20px; border-radius:10px; width:100%;">
+                    <h2 style="text-align: center;"> <strong> Misión</strong></h2>
+                    <h5>Facilitar la gestión integral de comunidades residenciales mediante herramientas tecnológicas
+                        que
+                        optimicen procesos de seguridad, registro de visitantes, comunicación interna y análisis
+                        demográfico,
+                        Promover la confianza y la
+                        transparencia en la administración, garantizando un entorno seguro y organizado para todos los
+                        residentes.
+                    </h5>
+                </div>
+                <div class="mb-3 mb-xl-0 pr-1 mt-3"
+                    style="background-color:#f6f7f8; padding:20px; border-radius:10px; width:100%;">
+                    <h2 style="text-align: center;"> <strong> Visión</strong></h2>
+                    <h5>
+                        <ul>
+                            <li>Convertirnos en la aplicación líder en gestión comunitaria en Colombia y Latinoamérica,
+                                reconocida
+                                por su innovación, confiabilidad y aporte a la convivencia ciudadana.
+                            </li>
+                            <li>Ser un referente en soluciones digitales que transformen la manera en que las
+                                comunidades
+                                residenciales se organizan y se relacionan.
+                            </li>
+                        </ul>
+                    </h5>
+                </div>
+            </div>
+            <div class="col-md-6 mt-5">
+                <img src="../template/images/ref1.jpg" alt="Logo2" style="position: relative;">
+            </div>
+    </div> -->
+<!-- <div class="col-md-5 mt-5">
+        <div style="background-color:#f6f7f8; padding:20px; border-radius:10px; width:100%;">
+          <h2>Que es vezinos?</h2>
+          <h5>VEZINOS es una aplicación diseñada para fortalecer la seguridad, la organización y
+            la convivencia en conjuntos residenciales. Su objetivo es ofrecer a administradores,
+            residentes y visitantes una plataforma moderna, confiable y fácil de usar.</h5>
+        </div>
+        <div class="mb-3 mb-xl-0 pr-1 mt-4"
+          style="background-color:#f6f7f8; padding:20px; border-radius:10px; width:100%;">
+          <h2>Propósito</h2>
+          <h5>Facilitar la gestión integral de la comunidad, garantizando control de acceso,
+            registro de visitantes, comunicación interna y análisis demográfico, todo en un solo
+            sistema.</h5>
+        </div>
+        <div class="mb-3 mb-xl-0 pr-1 mt-4"
+          style="background-color:#f6f7f8; padding:20px; border-radius:10px; width:100%;">
+          <h2>Módulos principales</h2>
+          <h5>
+            <ul>
+              <strong>
+                <li>Seguridad:
+              </strong>
+              Control de entradas y salidas con registro digital y validación en tiempo real.
+              </li>
+              <strong>
+                <li>Visitantes:
+              </strong>
+              Formulario rápido para ingreso, con notificaciones al residente correspondiente.
+              </li>
+              <strong>
+                <li>Demografía:
+              </strong>
+              Estadísticas y gráficos sobre la comunidad para apoyar decisiones administrativas.
+              </li>
+              <strong>
+                <li>Acceso:
+              </strong>
+              Roles diferenciados (administrador, residente, portero), con permisos específicos.
+              </li>
+            </ul>
+          </h5>
+        </div>
+        <div class="mb-3 mb-xl-0 pr-1 mt-4"
+          style="background-color:#f6f7f8; padding:20px; border-radius:10px; width:100%;">
+          <h2>Beneficios</h2>
+          <h5>
+            <ul>
+              <li>Mayor seguridad y confianza para los residentes.</li>
+              <li>Comunicación clara y directa entre administración y comunidad.</li>
+              <li>Optimización del tiempo en procesos de registro y control.</li>
+              <li>Imagen moderna y profesional para el conjunto residencial.</li>
+            </ul>
+          </h5>
+        </div>
+      </div>
+      <div class="col-md-7 mt-5">
+        <div style="background-color:#f6f7f8; padding:20px; border-radius:10px; width:100%;">
+          <div class="text-center">
+            <img src="images/Logo1.png" alt="auto" class="img-fluid d-block mx-auto" style="max-width:300px;">
+          </div>
+          <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; max-width:100%;">
+            <iframe src="https://www.youtube.com/embed/jbN5jff_Al8"
+              style="position:absolute; top:0; left:0; width:100%; height:100%;" frameborder="0" allowfullscreen>
+            </iframe>
+          </div>
+
+        </div>
+      </div> -->
+</div>
+</div>
+
+<script src="vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="js/off-canvas.js"></script>
+<script src="js/hoverable-collapse.js"></script>
+<script src="js/template.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/todolist.js"></script>
+<!-- endinject -->
+<!-- plugin js for this page -->
+<script src="vendors/progressbar.js/progressbar.min.js"></script>
+<script src="vendors/chart.js/Chart.min.js"></script>
+<!-- End plugin js for this page -->
+<!-- Custom js for this page-->
+<script src="js/dashboard.js"></script>
+<!-- End custom js for this page-->
+</body>
+
+</html>

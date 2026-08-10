@@ -1,82 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>CelestialUI Admin</title>
-  <!-- base:css -->
-  <link rel="stylesheet" href="../../vendors/typicons.font/font/typicons.css">
-  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="../../images/favicon.png" />
+  <title>Vezinos/ingresar</title>
+  <link rel="shortcut icon" href="../../images/Logo.png" />
+
+  <style>
+    .auth-form-light {
+      width: 80vw;
+      /* ocupa el 80% del ancho de la ventana */
+      max-width: 600px;
+      /* límite para pantallas grandes */
+      margin: 0 auto;
+      /* centrado */
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="container-scroller">
-    <div class="container-fluid page-body-wrapper full-page-wrapper">
-      <div class="content-wrapper d-flex align-items-center auth px-0">
-        <div class="row w-100 mx-0">
-          <div class="col-lg-4 mx-auto">
-            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-              <div class="brand-logo">
-                <img src="../../images/logo.svg" alt="logo">
+  <div class="row w-100 mx-0">
+    <div class="col-lg-6 mx-auto">
+      <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+        <div class="brand-logo text-center">
+          <img src="/template/images/Logo1.png" alt="Logo" style="width:200px; height:auto;">
+          <h4>Hola! Empecemos</h4>
+          <h6 class="font-weight-light">Inicia sesión para continuar</h6>
+          <form class="pt-3" id="ingresar">
+            <div class="form-group">
+              <div class="text-left">
+                <label for="">Seleccione su Rol</label>
               </div>
-              <h4>Hello! let's get started</h4>
-              <h6 class="font-weight-light">Sign in to continue.</h6>
-              <form class="pt-3">
-                <div class="form-group">
-                  <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">
-                </div>
-                <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
-                </div>
-                <div class="mt-3">
-                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../index.html">SIGN IN</a>
-                </div>
-                <div class="my-2 d-flex justify-content-between align-items-center">
-                  <div class="form-check">
-                    <label class="form-check-label text-muted">
-                      <input type="checkbox" class="form-check-input">
-                      Keep me signed in
-                    </label>
-                  </div>
-                  <a href="#" class="auth-link text-black">Forgot password?</a>
-                </div>
-                <div class="mb-2">
-                  <button type="button" class="btn btn-block btn-facebook auth-form-btn">
-                    <i class="typcn typcn-social-facebook-circular mr-2"></i>Connect using facebook
-                  </button>
-                </div>
-                <div class="text-center mt-4 font-weight-light">
-                  Don't have an account? <a href="register.html" class="text-primary">Create</a>
-                </div>
-              </form>
+              <div class="form-group">
+                <select class="form-control form-control-lg" id="exampleFormControlSelect2" name="rol">
+                  <option>Administrador</option>
+                  <option>Portería</option>
+                  <option>Residente</option>
+                </select>
+              </div>
+              <input type="text" class="form-control form-control-lg" id="exampleInputEmail1" name="nombre_usuario"
+                placeholder="Nombre de usuario">
             </div>
-          </div>
+            <div class="form-group">
+              <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" name="contrasena"
+                placeholder="Contraseña">
+            </div>
+            <div class="mt-3">
+              <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
+              INGRESAR
+              </button>
+            </div>
+            <div class="my-2 d-flex justify-content-between align-items-center">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input">
+                Mantenar sesión siempre
+                </label>
+              </div>
+              <a href="#" class="auth-link text-black">Olvidaste tu contraseña?</a>
+            </div>
+            <div class="mb-2">
+              <button type="button" class="btn btn-block btn-google auth-form-btn">
+                <i class="typcn typcn-social-google-plus-circular mr-2"></i>Conectar usando Gmail
+              </button>
+            </div>
+            <div class="text-center mt-4 font-weight-light">
+              No tienes una cuenta? <a href="#" onclick="cargarVista('pages/samples/register')"
+                class="text-primary">Crear</a>
+            </div>
+          </form>
         </div>
       </div>
-      <!-- content-wrapper ends -->
     </div>
-    <!-- page-body-wrapper ends -->
   </div>
-  <!-- container-scroller -->
-  <!-- base:js -->
+  </div>
+  </div>
+  </div>
+
   <script src="../../vendors/js/vendor.bundle.base.js"></script>
-  <!-- endinject -->
-  <!-- inject:js -->
   <script src="../../js/off-canvas.js"></script>
   <script src="../../js/hoverable-collapse.js"></script>
   <script src="../../js/template.js"></script>
   <script src="../../js/settings.js"></script>
   <script src="../../js/todolist.js"></script>
-  <!-- endinject -->
+  <script src="../../app.js"></script>
 </body>
 
 </html>

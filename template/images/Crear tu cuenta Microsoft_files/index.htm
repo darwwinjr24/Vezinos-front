@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HUMAN Iframe Page</title>
+    <style>
+        html {
+            overflow: hidden;
+        }
+
+        body {
+            overflow: hidden;
+            margin: 0;
+        }
+
+        #px-captcha {
+            text-align: center;
+            margin: auto;
+        }
+    </style>
+<script src="index_data/main.min.js"></script></head>
+
+<body>
+    <div id="px-captcha" tabindex="0"></div>
+    <script>"use strict";function t(n){return t="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},t(n)}var n="px-cdn.net",e="hsprotect.net",o=["_pxvid","_px3","_pxde"],c="";function i(t){var o={captcha:"".concat(window._pxAppId,"/captcha.js?a=c&m=0&u=").concat(window._pxUuid,"&v=").concat(window._pxVid),client:"".concat(window._pxAppId,"/main.min.js")};function c(n,e){var c=document.createElement("script");c.src="https://".concat(t,".").concat(n,"/").concat(o[t]),window._pxJsClientSrc="https://client.".concat(n,"/").concat(window._pxAppId,"/main.min.js"),c.onerror=e,document.head.appendChild(c)}function i(){var n=encodeURIComponent(JSON.stringify({appId:window._pxAppId||"",vid:window._pxVid||"",uuid:window._pxUuid||"",contextID:"client"===t?"S_24":"C_17",message:"".concat(t,"NotLoaded")}));(new Image).src="https://collector-a.px-client.net/api/v1/collector/clientError?r=".concat(n)}c(e,(function(){return c(n,i)}))}function r(){window.addEventListener("message",(function(n){var e=n.data;try{if("string"==typeof e&&(e=JSON.parse(e)),!e||"object"!==t(e))return;var o=e.type;if(!o)return;switch(o){case"block":d(e.jsonResponse,e.requestUrl);break;case"setToWindow":p(e.key,e.value);break;case"focus":a()}}catch(t){}})),window[window._pxAppId+"_asyncInit"]=function(t){t.Events.on("captcha",(function(t){"rendered"===t&&a(),window.parent.postMessage({type:t},"*")}))}}function p(t,n){t&&(window[t]=n)}function a(){document.querySelector("#px-captcha").focus()}function d(t,n){var e=t.vid,o=t.uuid;window._pxUuid=o,window._pxVid=e,window._pxBlockedUrl=n,i("captcha")}function u(t){var n=new RegExp("(^| )".concat(t,"=([^;]+)")),e=document.cookie.match(n);return e?e[2]:null}function s(t,n,e){e=e||new Date(Date.now()+31536e6).toUTCString(),window.parent.postMessage({type:"cookie",name:t,value:n,expires:e},"*")}function w(t){var n=t.match(/^([^=]+)=([^;]*)/),e=t.match(/expires=([^;]+)/);return{name:n?n[1]:null,value:n?n[2]:null,expires:e?e[1]:null}}function l(t){var n=w(t);-1!==o.indexOf(n.name)&&s(n.name,n.value,n.expires)}function f(){try{var t=Object.getOwnPropertyDescriptor(Document.prototype,"cookie")||Object.getOwnPropertyDescriptor(Object.getPrototypeOf(document),"cookie"),n=t.get.bind(document),e=t.set.bind(document);Object.defineProperty(document,"cookie",{get:function(){try{return n()}catch(t){}},set:function(t){try{l(t),e(t)}catch(t){}}})}catch(t){}}function m(){if(window._pxAppId){var t="collector-"+window._pxAppId.toLowerCase()+".hsprotect.net",n=XMLHttpRequest.prototype.open;XMLHttpRequest.prototype.open=function(){n.apply(this,arguments);try{window._pxCaptchaTesting&&(e=arguments[1],(o=document.createElement("a")).href=e,o.hostname.indexOf(t)>-1)&&this.setRequestHeader("x-px-captcha-testing",window._pxCaptchaTesting)}catch(t){}var e,o}}}function x(){try{var t=localStorage.getItem(window._pxAppId+"_pxvid");return t?JSON.parse(atob(t)).val:null}catch(t){return null}}function _(t){return t.substring(1).split("&").reduce((function(t,n){try{var e=n.split("="),o=e[0],c=e[1];t[o]=decodeURIComponent(c)}catch(t){}return t}),{})}function y(){c=_(window.location.search),window._pxAppId=c.app_id||null;for(var t=1;t<=10;t++)void 0!==c["px_param"+t]&&(window["_pxParam"+t]=c["px_param"+t]);c.session_id&&(window._pxParam1=c.session_id),window._pxOnCaptchaSuccess=function(){}}function v(){var t=u("_pxvid")||x();t&&(s("_pxvid",t),window._pxVid=t)}function h(){window.onerror=function(t,n,e,o,c){var i={type:"error",message:t,source:n,line:e,column:o,stack:c&&c.stack,timestamp:(new Date).toISOString(),vid:window._pxVid};window.parent.postMessage(i,"*")}}function g(){y(),m(),f(),r(),v(),h(),c.ch_ctx||i("client")}g();</script>
+
+
+
+</body></html>

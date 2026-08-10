@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Contenedor principal */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: #1e88e5;
+            margin-bottom: 10px;
+        }
+
+        .card p,
+        .card ul {
+            color: #555;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Ajuste del video */
+        .ratio {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Logo encima del video */
+        .card img {
+            max-width: 250px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5 mb-5">
+        <div class="row align-items-center">
+
+            <!-- Columna izquierda: Información -->
+            <div class="col-lg-5 col-md-12">
+                <div class="card mb-4 p-3">
+                    <h2 class="text-primary">¿Qué es VEZINOS?</h2>
+                    <p class="lead">
+                        VEZINOS es una aplicación diseñada para fortalecer la seguridad, la organización y
+                        la convivencia en conjuntos residenciales. Su objetivo es ofrecer a administradores,
+                        residentes y visitantes una plataforma moderna, confiable y fácil de usar.
+                    </p>
+                </div>
+
+                <div class="card mb-4 p-3">
+                    <h2 class="text-primary">Propósito</h2>
+                    <p>
+                        Facilitar la gestión integral de la comunidad, garantizando control de acceso,
+                        registro de visitantes, comunicación interna y análisis demográfico, todo en un solo sistema.
+                    </p>
+                </div>
+
+                <div class="card mb-4 p-3">
+                    <h2 class="text-primary">Módulos principales</h2>
+                    <ul>
+                        <li><strong>Seguridad:</strong> Control de entradas y salidas con registro digital.</li>
+                        <li><strong>Visitantes:</strong> Formulario rápido para ingreso con notificaciones.</li>
+                        <li><strong>Demografía:</strong> Estadísticas y gráficos para decisiones administrativas.</li>
+                        <li><strong>Acceso:</strong> Roles diferenciados con permisos específicos.</li>
+                    </ul>
+                </div>
+
+                <div class="card mb-4 p-3">
+                    <h2 class="text-primary">Beneficios</h2>
+                    <ul>
+                        <li>Mayor seguridad y confianza para los residentes.</li>
+                        <li>Comunicación clara y directa entre administración y comunidad.</li>
+                        <li>Optimización del tiempo en procesos de registro y control.</li>
+                        <li>Imagen moderna y profesional para el conjunto residencial.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Columna derecha: Video -->
+            <div class="col-lg-7 col-md-12">
+                <div class="card p-3 text-center">
+                    <img src="images/Logo1.png" alt="Logo VEZINOS" class="img-fluid mb-4" style="max-width:250px;">
+
+                    <div class="ratio ratio-16x9 shadow rounded">
+                        <iframe src="https://www.youtube.com/embed/jbN5jff_Al8" title="Video VEZINOS"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>www.vezinosadmin.com.co</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+
+    <!-- Boopstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="images/Logo.png" />
+</head>
+
+<body>
+
+    <div class="col-sm-6">
+        <a><img src="images/conj4.png"
+                style="height: 100px; width:auto;display:inline-block; vertical-align:middle;" /></a>
+        <h3 class="mb-0 font-weight-bold" style="margin-top: 1cm;">Conjunto Trapiches</h3>
+        <p>Calle 25 # 2-90</p>
+    </div>
+
+    <!-- Filtro por fecha -->
+    <form class="row g-3 mb-4 mt-3">
+        <div class="col-md-4">
+            <label for="fechaInicio" class="form-label">Fecha inicio</label>
+            <input type="date" class="form-control" id="fechaInicio">
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <button type="button" class="btn btn-primary w-100">Filtrar</button>
+        </div>
+    </form>
+
+    <!-- Botón exportar -->
+    <div class="dropdown mb-3">
+        <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            Exportar
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#" onclick="exportExcel()">Archivo Excel</a></li>
+            <li><a class="dropdown-item" href="#" onclick="exportPDF()">Archivo PDF</a></li>
+        </ul>
+    </div>
+    <!-- Esta es la tabla -->
+
+    <div class="container mt-4">
+        <h3 class="mb-4">Registro de Visitantes</h3>
+        <div class="" style="max-width: 100%;">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center align-middle">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Fecha de ingreso</th>
+                                <th>Nombre del visitante</th>
+                                <th>Documento del visitante</th>
+                                <th>Nombre quien autoriza</th>
+                                <th>casa a visitar</th>
+                                <th>Placa de vehículo</th>
+                                <th>Hora de ingreso</th>
+                                <th>Hora de salida</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2026/05/13</td>
+                                <td>Mauricio Escalante</td>
+                                <td>10905827319</td>
+                                <td>Luis Duarte</td>
+                                <td>Casa 19</td>
+                                <td>TJO679</td>
+                                <td>09:15 AM</td>
+                                <td>12:10 PM</td>
+                            </tr>
+                            <tr>
+                                <td>2026/05/13</td>
+                                <td>Mariana EScobar</td>
+                                <td>135869321</td>
+                                <td>MArta Figueredo</td>
+                                <td>Casa 90</td>
+                                <td>KRL485</td>
+                                <td>07:05 AM</td>
+                                <td>03:50 PM</td>
+                            </tr>
+                            <tr>
+                                <td>2026/05/13</td>
+                                <td>Ignacio Diaz</td>
+                                <td>88524790</td>
+                                <td>Santiago Moure</td>
+                                <td>Casa 77</td>
+                                <td>No</td>
+                                <td>10:00 AM</td>
+                                <td>10:30 AM</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="js/off-canvas.js"></script>
+    <script src="js/hoverable-collapse.js"></script>
+    <script src="js/template.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <script src="vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="js/dashboard.js"></script>
+    <!-- End custom js for this page-->
+</body>
+
+</html>
