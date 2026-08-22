@@ -1,7 +1,7 @@
 console.log("✅ app.js activo y listo para probar");
 
 // Función para mostrar vistas
-async function cargarVista(vista, evento) {
+async function cargarVista(vista, evento, filtroRol = null) {
   if (evento) evento.preventDefault();
   const contenedor = document.getElementById("contenido");
   try {
@@ -26,21 +26,17 @@ async function cargarVista(vista, evento) {
         inicializarLogin(); // Activa la escucha del formulario de login
       }
     }
-    else if (vista.includes("formulario-propietario")) {
-      if (typeof inicializarPropietarios === "function") {
-        inicializarPropietarios(); // Activa la escucha del formulario de login
+    else if (vista.includes("formulario-propietario") || vista.includes("formulario-residente")) {
+      if (typeof inicializarPersonas === "function") {
+        inicializarPersonas(); // Activa la escucha del formulario de login
       }
     }
     else if (vista.includes("lista-propietarios")) {
-      if (typeof cargarPropietarios === "function") {
-        requestAnimationFrame(() => cargarPropietarios());
+      if (typeof cargarPersonas === "function") {
+        requestAnimationFrame(() => cargarPersonas(filtroRol));
       }
     }
-    // else if (vista.includes("lista-propietarios")) {
-    //   if (typeof cargarPropietarios === "function") {
-    //     requestAnimationFrame(() => cargarPropietarios());
-    //   }
-    // }
+
   } catch (error) {
     console.error("Error cargando la vista:", error);
     contenedor.innerHTML = "<p class='text-danger text-center mt-3'>Error al cargar el contenido.</p>";
@@ -65,7 +61,7 @@ function inicializarVistas() {
       console.log(key, value);
     }
     // Enviar al backend
-    fetch("http://127.0.0.1/vezinos_backend/vezinos/guardar.php", {
+    fetch("http://127.0.0.1/vezinos_backend/vezinos/usuarios.php", {
       method: "POST",
       body: formData
     })
@@ -126,15 +122,15 @@ function inicializarLogin() {
   }
 }
 
-//Función para guardar datos de propietarios
-function inicializarPropietarios() {
-  const form = document.getElementById("propietario");
+//Función para guardar datos de personas
+function inicializarPersonas() {
+  const form = document.getElementById("personas");
   if (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       let formData = new FormData(form);
 
-      fetch("http://127.0.0.1/vezinos_backend/vezinos/register_propietario.php", {
+      fetch("http://127.0.0.1/vezinos_backend/vezinos/personas.php", {
         method: "POST",
         body: formData
       })
@@ -144,49 +140,73 @@ function inicializarPropietarios() {
           alert(data.message);
           // Limpia todos los inputs del formulario
           form.reset();
-          // Refrescar la tabla de propietarios
-          cargarPropietarios();
+          // Refrescar la tabla de personas
+          cargarPersonas();
         })
         .catch(err => {
           console.error("Error en la conexión:", err);
-          alert("Error en la conexión de propietarios");
+          alert("Error en la conexión de personas");
         });
     });
   }
 }
 
-// Función para mostrar tabla de propietarios
-function cargarPropietarios() {
+// Función para mostrar tabla de personas
+function cargarPersonas(filtroRol = null) {
   console.log("Se inició tabla");
 
   const contenedor = document.getElementById("contenido");
-  const tbody = contenedor.querySelector("#tabla-propietarios");
+  const tbody = contenedor.querySelector("#tabla-personas");
   if (!tbody) {
-    console.warn("No existe la tabla de propietarios en esta vista");
+    console.warn("No existe la tabla de personas en esta vista");
     return;
   }
 
-  fetch("http://127.0.0.1/vezinos_backend/vezinos/listar_propietarios.php")
+  fetch("http://127.0.0.1/vezinos_backend/vezinos/mostrar_personas.php")
     .then(res => res.json())
     .then(data => {
       tbody.innerHTML = "";
-      data.forEach(p => {
+      let personas = data;
+      if (filtroRol) {
+        if (filtroRol.toLowerCase() === "propietario") {
+          // 🔎 Filtrar por rol propietario
+          personas = data.filter(p => p.rol && p.rol.toLowerCase() === "propietario");
+        } else if (filtroRol.toLowerCase() === "arrendatario") {
+          // 🔎 Filtrar por rol arrendatario Y residente = "Si"
+          personas = data.filter(p =>
+            // p.rol && p.rol.trim().toLowerCase() === "arrendatario" 
+             //&&
+            p.residente && p.residente.trim().toLowerCase() === "si"
+          );
+        }
+      }
+      // personas = data.filter(p => p.rol && p.rol.toLowerCase() === filtroRol.toLowerCase());
+      personas.forEach(p => {
         const fila = `
           <tr>
-            <td>${p.nombre}</td>
+            <td>${p.nombre_completo}</td>
             <td>${p.numero_cedula}</td>
             <td>${p.celular}</td>
             <td>${p.correo}</td>
             <td>${p.casa}</td>
+
             <td>
               <span class="badge ${p.residente === 'Si' ? 'bg-success' : 'bg-danger'}">
                 ${p.residente}
               </span>
+            <td>${p.rol}</td>
             </td>
-            <td>
-          <a href="#" class="btn-editar text-primary" data-id="${p.id}">
-        <i class="fas fa-edit"></i>
-      </a>
+            <td class="text-center">
+            <div class="d-inline-flex gap-4">
+              <!-- Botón Editar -->
+              <a href="#" class="btn-editar text-primary" data-id_persona="${p.id_persona}">
+              <i class="fas fa-edit"></i>
+              </a>
+              <!-- Botón Borrar -->
+              <a href="#" class="btn-borrar text-danger" data-id_persona="${p.id_persona}">
+              <i class="fas fa-trash"></i>
+              </a>
+            </div>
             </td>
           </tr>
         `;
@@ -195,45 +215,49 @@ function cargarPropietarios() {
       document.querySelectorAll(".btn-editar").forEach(btn => {
         btn.addEventListener("click", e => {
           e.preventDefault();
-          const id = btn.dataset.id;
-          console.log("ID enviado a editarPropietario:", id); // 👈 depuración
-          editarPropietario(id);
+          const id = btn.dataset.id_persona;
+          console.log("ID enviado a editarPersona:", id); // 👈 depuración
+          editarPersonas(id);
         });
       });
     })
-    .catch(err => console.error("Error cargando propietarios:", err));
+    .catch(err => console.error("Error cargando personas:", err));
 }
 
-//Funcion para editar el propietario
-async function editarPropietario(id) {
-  console.log("ID enviado:", id);
+//Funcion para editar la persona
+async function editarPersonas(id_persona) {
+  console.log("ID enviado:", id_persona);
 
   try {
-    const res = await fetch(`http://127.0.0.1/vezinos_backend/vezinos/buscar_propietario.php?id=${id}`);
-    const propietario = await res.json();
-    console.log("Propietario recibido:", propietario); // 👈 Depuración
+    const res = await fetch(`http://127.0.0.1/vezinos_backend/vezinos/buscar_personas.php?id_persona=${id_persona}`);
+    const persona = await res.json();
+    console.log("persona recibida:", persona); // 👈 Depuración
     // Cargar la vista del formulario
-    await cargarVista("formulario-propietario");
-
+    if (persona.rol && persona.rol.toLowerCase() === "arrendatario") {
+      await cargarVista("formulario-residente");
+    } else {
+      await cargarVista("formulario-propietario");
+    }
     // Rellenar campos después de que el formulario esté en el DOM
     setTimeout(() => {
-      document.getElementById("nombre").value = propietario.nombre ?? "";
-      document.getElementById("numero_cedula").value = propietario.numero_cedula ?? "";
-      document.getElementById("celular").value = propietario.celular ?? "";
-      document.getElementById("correo").value = propietario.correo ?? "";
-      document.getElementById("torre_manzana").value = propietario.torre_manzana ?? "";
-      document.getElementById("apartamento").value = propietario.apartamento ?? "";
-      document.getElementById("residente").value = propietario.residente ?? "";
-      document.getElementById("propietario_id").value = propietario.id; // campo oculto
+      document.getElementById("nombre_completo").value = persona.nombre_completo ?? "";
+      document.getElementById("numero_cedula").value = persona.numero_cedula ?? "";
+      document.getElementById("celular").value = persona.celular ?? "";
+      document.getElementById("correo").value = persona.correo ?? "";
+      document.getElementById("torre_manzana").value = persona.torre_manzana ?? "";
+      document.getElementById("apartamento").value = persona.apartamento ?? "";
+      document.getElementById("rol").value = persona.rol ?? "";
+      document.getElementById("residente").value = persona.residente ?? "";
+      document.getElementById("id_persona").value = persona.id_persona; // campo oculto
     }, 100);
   } catch (err) {
-    console.error("Error al editar propietario:", err);
+    console.error("Error al editar persona:", err);
   }
 }
 
 
 // Llamar la función al cargar la vista
-document.addEventListener("DOMContentLoaded", cargarPropietarios);
+document.addEventListener("DOMContentLoaded", cargarPersonas);
 
 
 // Función para inhabilitar input
@@ -344,7 +368,7 @@ function inicializarGraficos() {
   const graficoCircularArrendatario = new Chart(ctx4, {
     type: 'pie',
     data: {
-      labels: ['Arrendatarios', 'Propietarios'],
+      labels: ['Arrendatarios', 'Personas'],
       datasets: [{
         data: [120, 300], // Ejemplo: 120 menores, 300 adultos, 80 adultos mayores
         backgroundColor: ['#007bff', '#dc3545',] // azul, rojo, gris

@@ -23,17 +23,18 @@
         </div>
       </div>
       <div class="container-fluid" ;>
-        <form id="propietario">
-          <input type="hidden" id="propietario_id" name="id">
+        <form id="personas">
           <div class="formulario">
             <h2>Registrar propietario</h2>
 
             <!-- Input de texto -->
-            <label for="">Nombre completo:</label>
-            <input type="text" id="nombre" placeholder="Escribe tu nombre" name="nombre">
-
+            
             <label for="">Numero de la cédula:</label>
+            <input type="hidden" id="id_persona" name="id_persona">
             <input type="number" id="numero_cedula" placeholder="Ej: 88956417" name="numero_cedula">
+
+            <label for="">Nombre completo:</label>
+            <input type="text" id="nombre_completo" placeholder="Escribe tu nombre" name="nombre_completo">
 
             <label for="">Correo electrónico:</label>
             <input type="text" id="correo" placeholder="Ej: luismedina34@outlook.com" name="correo">
@@ -50,6 +51,11 @@
             </div>
 
             <!-- Input de opción (select) -->
+            <label for="">Rol:</label>
+            <select id="rol" name="rol">
+              <option value="propietario">Propietario</option>
+            </select>
+
             <label for="">Reside en el conjunto:</label>
             <select id="residente" name="residente">
               <option value="Si">Si</option>
