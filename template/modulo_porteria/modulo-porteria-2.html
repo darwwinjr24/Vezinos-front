@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>www.vezinosadmin.com.co</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+    <link rel="shortcut icon" href="images/Logo.png" />
+</head>
+
+<body>
+    <!-- partial -->
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-sm-6">
+                    <a><img src="images/conj4.png"
+                            style="height: 100px;; width:auto;display:inline-block; vertical-align:middle;" /></a>
+                    <h3 class="mb-0 font-weight-bold" ; style="margin-top: 1cm;">Conjunto Trapiches</h3>
+                    <p>Calle 25 # 2-90</p>
+                </div>
+            </div>
+            <h1 style="margin-top: 2cm;">Validar codigo QR</h1>
+
+            <div class="container-fluid" ;>
+                <div class="formulario">
+                    <h2>Escanea el código</h2>
+
+                    <div class="scanner" id="reader">
+                    </div>
+                    <img id="logo" src="/template/images/QR.png" alt="max-height">
+                    <div>
+
+                        <button id="btnEscanear" ; class="btn-azul">📷 Iniciar escaneo</button>
+                        <button id="btnDetener" ; class="btn-plateado">⏹ Detener escaneo</button>
+                    </div>
+                    <div id="resultado">Esperando escaneo...</div>
+
+                    <script>
+                        const html5QrCode = new Html5Qrcode("reader");
+
+                        document.getElementById("btnEscanear").addEventListener("click", () => {
+                            document.getElementById("logo").style.display = "none";
+                            document.getElementById("reader").style.display = "block";
+
+                            Html5Qrcode.getCameras().then(cameras => {
+                                if (cameras && cameras.length) {
+                                    html5QrCode.start(
+                                        cameras[0].id,
+                                        { fps: 10, qrbox: 300 },
+                                        qrCodeMessage => {
+                                            if (qrCodeMessage === "VEZINOS-12345") {
+                                                document.getElementById("resultado").innerHTML = "✅ Código válido: acceso autorizado";
+                                            } else {
+                                                document.getElementById("resultado").innerHTML = "❌ Código inválido: acceso denegado";
+                                            }
+                                        }
+                                    );
+                                }
+                            });
+                        });
+
+                        document.getElementById("btnDetener").addEventListener("click", () => {
+                            html5QrCode.stop();
+                            document.getElementById("resultado").innerHTML = "⏹ Escaneo detenido";
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <script src="vendors/js/vendor.bundle.base.js"></script>
+    <script src="js/off-canvas.js"></script>
+    <script src="js/hoverable-collapse.js"></script>
+    <script src="js/template.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/todolist.js"></script>
+    <script src="vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="vendors/chart.js/Chart.min.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+<style>
+    .formulario {
+        background-color: #ffffff;
+        /* fondo blanco */
+        padding: 40px;
+        border-radius: 15px;
+        width: 60%;
+        max-width: 900px;
+        /* límite máximo */
+        margin: 50px auto;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #logo {
+        width: 200px;
+        /* ancho fijo */
+        height: auto;
+        /* mantiene proporción */
+        display: block;
+        margin: 20px auto;
+        /* centrado */
+    }
+
+    #reader {
+        width: 300px;
+        /* mismo ancho que el logo */
+        height: 300px;
+        /* cuadrado para la cámara */
+        margin: 30px auto;
+        display: none;
+        /* oculto al inicio */
+    }
+
+    .formulario label {
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    .formulario input,
+    .formulario select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .formulario .opciones {
+        margin-top: 20px;
+    }
+
+    .formulario button {
+        margin-top: 20px;
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-plateado {
+        background-color: #C0C0C0;
+        color: #000;
+        /* texto negro para contraste */
+    }
+
+    .btn-azul {
+        background-color: #007bff;
+        color: #fcf9f9;
+    }
+
+    .formulario .btn-azul:hover {
+        background-color: #0056b3;
+    }
+
+    .formulario .btn-plateado:hover {
+        background-color: #999999;
+    }
+</style>
+
+
+</html>

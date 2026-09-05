@@ -10,18 +10,16 @@ async function cargarVista(vista, evento, filtroRol = null) {
     const html = await respuesta.text();
     contenedor.innerHTML = html;
     // --- EJECUCIÓN DE SCRIPTS SEGÚN LA VISTA ---
-    if (vista.includes("tarjetas-conjuntos")) {
-    }
-    else if (vista === "graficos") {
+  if (vista === "graficos") {
       inicializarGraficos();
     }
     // Evaluamos si es la vista de registro (ya sea en raíz o subcarpeta)
-    else if (vista.includes("register") || vista === "registro") {
+    else if (vista.includes("registrar") || vista === "registro") {
       if (typeof inicializarVistas === "function") {
         inicializarVistas(); // Activa la escucha del botón de registro en app.js
       }
     }
-    else if (vista.includes("login")) {
+    else if (vista.includes("ingresar")) {
       if (typeof inicializarLogin === "function") {
         inicializarLogin(); // Activa la escucha del formulario de login
       }
@@ -36,6 +34,11 @@ async function cargarVista(vista, evento, filtroRol = null) {
         requestAnimationFrame(() => cargarPersonas(filtroRol));
       }
     }
+    //   else if (vista.includes("modulo-residente")) {
+    //   if (typeof cargarPersonas === "function") {
+    //     requestAnimationFrame(() => cargarPersonas(filtroRol));
+    // }
+    // }
 
   } catch (error) {
     console.error("Error cargando la vista:", error);
@@ -102,14 +105,22 @@ function inicializarLogin() {
         method: "POST",
         body: formData
       })
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === "success") {
-            const rol = formData.get("rol");
-            if (rol === "Administrador") {
-              window.location.href = "/template/index-admin.html";
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          const rol = formData.get("rol").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); 
+          console.log("Rol recibido:", rol);
+            
+            if (rol === "administrador") {
+              window.location.href = "/template/modulo_administrador/index-admin.html";
+            }
+            else if (rol === "porteria") {
+              window.location.href = "/template/index_porteria.html";
+            }
+            else if (rol === "residente") {
+              window.location.href = "/template/modulo-residente.html";
             } else {
-              alert("Login correcto, pero aún no tienes acceso a index-admin.html");
+              alert("Rol no reconocido");
             }
           } else {
             alert(data.message);
@@ -175,7 +186,7 @@ function cargarPersonas(filtroRol = null) {
           // 🔎 Filtrar por rol arrendatario Y residente = "Si"
           personas = data.filter(p =>
             // p.rol && p.rol.trim().toLowerCase() === "arrendatario" 
-             //&&
+            //&&
             p.residente && p.residente.trim().toLowerCase() === "si"
           );
         }
