@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="utf-8">
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
   <title>Vezinos/registrar</title>
   <link rel="shortcut icon" href="../../images/Logo.png" />
 </head>
@@ -52,13 +51,7 @@
             <h6>Seleccione su Conjunto</h6>
           </div>
           <div class="form-group">
-            <select class="form-control form-control-lg" id="exampleFormControlSelect2" name="conjunto" required>
-              <option>Conjunto Palmetto</option>
-              <option>Conjunto Trapiches</option>
-              <option>Conjunto Torres del Este</option>
-              <option>Conjunto Caoba</option>
-              <option>Conjunto Tulipanes</option>
-              <option>Conjunto Arkadia</option>
+            <select class="form-control form-control-lg" id="opcion-conjuntos" name="id_conjunto" required>
             </select>
           </div>
           <div class="form-group">
@@ -82,7 +75,8 @@
             <button type="submit" id="btn-guardar" class="btn btn-primary btn-block">REGISTRAR</button>
           </div>
           <div class="text-center mt-4 font-weight-light">
-            Ya tienes una cuenta? <a href="#" onclick="cargarVista('pages/samples/login')" class="text-primary">Inicia
+            Ya tienes una cuenta? <a href="#" onclick="cargarVista('modulo_usuarios/ingresar')"
+              class="text-primary">Inicia
               sesión</a>
           </div>
         </form>
@@ -93,6 +87,7 @@
   </div>
   </div>
   </div>
+
   <script src="../app.js"></script>
 </body>
 

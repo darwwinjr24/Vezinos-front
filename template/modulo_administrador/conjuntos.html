@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>www.vezinosadmin.com.co</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="../vendors/typicons.font/font/typicons.css">
+  <link rel="stylesheet" href="../vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../images/Logo.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+  <div class="container-fluid">
+    <div class="row mt-3">
+      <div class="col- md-6 col-xl-4">
+        <div class="card">
+          <img src="../images/conj4.png" alt="Trapiches" class="img-fluid">
+          <h3>Conjunto Trapiches</h3>
+          <p>Conjunto ubicado en el Municipio de Villa del Rosario, tiene 147 unidades familiares.</p>
+          <a href="#" onclick="cargarVista('formulario-propietario')">
+            <i class="fas fa-eye"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-xl-4">
+        <div class="card">
+          <img src="../images/conj1.png" alt="Trapiches" class="img-fluid">
+          <h3>Conjunto Kaoba</h3>
+          <p> Conjunto de torres ubicado en la ciudad de Cúcuta, tiene 256 apartamentos distribuidos en 08 torres
+            de 32 apts.</p>
+          <a href="#" target="_blank">
+            <i class="fas fa-eye"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-xl-4">
+        <div class="card">
+          <img src="../images/conj2.jpg" alt="Trapiches" class="img-fluid">
+          <h3>Conjunto Tulipanes</h3>
+          <p>Conjunto ubicado en el Municipio de Villa del Rosario, tiene 80 unidades familiares.</p>
+          <a href="#" target="_blank">
+            <i class="fas fa-eye"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- container-scroller -->
+  <!-- base:js -->
+  <script src="vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="js/off-canvas.js"></script>
+  <script src="js/hoverable-collapse.js"></script>
+  <script src="js/template.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- plugin js for this page -->
+  <script src="vendors/progressbar.js/progressbar.min.js"></script>
+  <script src="vendors/chart.js/Chart.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- Custom js for this page-->
+  <script src="js/dashboard.js"></script>
+  <!-- <script src="app.js"></script> -->
+
+  <!-- <script>
+    async function cargarVista(vista) {
+      const contenedor = document.getElementById("contenido");
+      try {
+        const respuesta = await fetch(vista + ".html");
+        if (!respuesta.ok) throw new Error("No se pudo cargar la vista");
+        const html = await respuesta.text();
+        contenedor.innerHTML = html;
+      } catch (error) {
+        contenedor.innerHTML = "<p>Error cargando la vista: " + error.message + "</p>";
+      }
+    }
+    // Cargar vista inicial al abrir la página
+    cargarVista('menu-admin');
+  </script> -->
+
+  <!-- End custom js for this page-->
+</body>
+
+<style>
+  .card {
+    width: 100%;
+    /* ocupa el ancho de la columna */
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .card img {
+    width: 100%;
+    height: 100px;
+    object-fit: contain;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+    /* efecto al pasar el mouse */
+  }
+
+
+
+  .card h3 {
+    margin: 10p
+  }

@@ -29,30 +29,25 @@
 
             <!-- Input de texto -->
             
+            <input type="hidden" id="id_persona" name="id_persona">  <!-- campo oculto -->
+            <input type="hidden" name="id_usuario">  <!-- campo oculto -->
+            
             <label for="">Numero de la cédula:</label>
-            <input type="hidden" id="id_persona" name="id_persona">
             <input type="number" id="numero_cedula" placeholder="Ej: 88956417" name="numero_cedula">
 
             <label for="">Nombre completo:</label>
-            <input type="text" id="nombre_completo" placeholder="Escribe tu nombre" name="nombre_completo">
+            <input type="text" id="nombre_persona" placeholder="Escribe tu nombre" name="nombre_persona">
 
             <label for="">Correo electrónico:</label>
-            <input type="text" id="correo" placeholder="Ej: luismedina34@outlook.com" name="correo">
+            <input type="text" id="correo_persona" placeholder="Ej: luismedina34@outlook.com" name="correo_persona">
 
             <!-- Input numérico -->
             <label for="">Numero de Celular:</label>
             <input type="" id="celular" placeholder="Ej: 3108569300" name="celular">
 
-
-            <label for="">Numero de la casa o apartamento:</label>
-            <div class="numero">
-              <input type="text" id="torre_manzana" name="torre_manzana" placeholder="Torre o Manzana">
-              <input type="number" id="apartamento" name="apartamento" placeholder="Numero">
-            </div>
-
             <!-- Input de opción (select) -->
             <label for="">Rol:</label>
-            <select id="rol" name="rol">
+            <select id="perfil" name="perfil">
               <option value="propietario">Propietario</option>
             </select>
 
@@ -61,6 +56,15 @@
               <option value="Si">Si</option>
               <option value="No">No</option>
             </select>
+
+            <!-- <label for="">Edad</label>
+            <input type="number" id="edad" placeholder="Ej: 3108569300" name="edad">
+
+            <label for="">Sexo</label>
+            <select id="sexo" name="sexo">
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+            </select> -->
 
             <!-- Botón -->
             <div class="botones">

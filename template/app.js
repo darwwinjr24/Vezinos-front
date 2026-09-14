@@ -10,7 +10,7 @@ async function cargarVista(vista, evento, filtroRol = null) {
     const html = await respuesta.text();
     contenedor.innerHTML = html;
     // --- EJECUCIÓN DE SCRIPTS SEGÚN LA VISTA ---
-  if (vista === "graficos") {
+    if (vista === "graficos") {
       inicializarGraficos();
     }
     // Evaluamos si es la vista de registro (ya sea en raíz o subcarpeta)
@@ -49,8 +49,8 @@ async function cargarVista(vista, evento, filtroRol = null) {
 //Función para guardar Usuarios
 function inicializarVistas() {
   const form = document.getElementById("registro");
+  cargarConjuntos();
   form.addEventListener("submit", function (e) {
-    alert("¡Registro funcionando!");
     e.preventDefault();
     const contrasena = form.querySelector('input[name="contrasena"]').value;
     const confirmacion = form.querySelector('input[name="confirmacion"]').value;
@@ -63,8 +63,12 @@ function inicializarVistas() {
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
     }
+    if (!formData.get("id_conjunto")) {
+      alert("Debe seleccionar un conjunto");
+      return;
+    }
     // Enviar al backend
-    fetch("http://127.0.0.1/vezinos_backend/vezinos/usuarios.php", {
+    fetch("http://127.0.0.1/vezinos_backend/vezinos/usuarios/guardar.php", {
       method: "POST",
       body: formData
     })
@@ -74,6 +78,8 @@ function inicializarVistas() {
           alert(data.message); // muestra el error específico
         } else {
           alert(data.message); // muestra éxito
+          // Limpia todos los inputs del formulario
+          form.reset();
         }
       })
       .catch(err => {
@@ -101,24 +107,24 @@ function inicializarLogin() {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       let formData = new FormData(form);
-      fetch("http://127.0.0.1/vezinos_backend/vezinos/login.php", {
+      fetch("http://127.0.0.1/vezinos_backend/vezinos/usuarios/buscar.php", {
         method: "POST",
         body: formData
       })
-      .then(res => res.json())
-      .then(data => {
-        if (data.status === "success") {
-          const rol = formData.get("rol").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); 
-          console.log("Rol recibido:", rol);
-            
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === "success") {
+            const rol = formData.get("rol").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            console.log("Rol recibido:", rol);
+
             if (rol === "administrador") {
-              window.location.href = "/template/modulo_administrador/index-admin.html";
+              window.location.href = "modulo_administrador/index-admin.html";
             }
             else if (rol === "porteria") {
-              window.location.href = "/template/index_porteria.html";
+              window.location.href = "modulo_porteria/index_porteria.html";
             }
             else if (rol === "residente") {
-              window.location.href = "/template/modulo-residente.html";
+              window.location.href = "modulo_residente/index_residente.html";
             } else {
               alert("Rol no reconocido");
             }
@@ -136,12 +142,13 @@ function inicializarLogin() {
 //Función para guardar datos de personas
 function inicializarPersonas() {
   const form = document.getElementById("personas");
+  buscarCedula()
   if (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       let formData = new FormData(form);
 
-      fetch("http://127.0.0.1/vezinos_backend/vezinos/personas.php", {
+      fetch("http://127.0.0.1/vezinos_backend/vezinos/personas/guardar_editar.php", {
         method: "POST",
         body: formData
       })
@@ -151,8 +158,6 @@ function inicializarPersonas() {
           alert(data.message);
           // Limpia todos los inputs del formulario
           form.reset();
-          // Refrescar la tabla de personas
-          cargarPersonas();
         })
         .catch(err => {
           console.error("Error en la conexión:", err);
@@ -173,62 +178,79 @@ function cargarPersonas(filtroRol = null) {
     return;
   }
 
-  fetch("http://127.0.0.1/vezinos_backend/vezinos/mostrar_personas.php")
+  fetch("http://127.0.0.1/vezinos_backend/vezinos/personas/ver.php")
     .then(res => res.json())
     .then(data => {
       tbody.innerHTML = "";
       let personas = data;
+
       if (filtroRol) {
         if (filtroRol.toLowerCase() === "propietario") {
           // 🔎 Filtrar por rol propietario
-          personas = data.filter(p => p.rol && p.rol.toLowerCase() === "propietario");
+          personas = data.filter(p => p.perfil && p.perfil.toLowerCase() === "propietario");
         } else if (filtroRol.toLowerCase() === "arrendatario") {
           // 🔎 Filtrar por rol arrendatario Y residente = "Si"
           personas = data.filter(p =>
-            // p.rol && p.rol.trim().toLowerCase() === "arrendatario" 
-            //&&
             p.residente && p.residente.trim().toLowerCase() === "si"
           );
         }
       }
-      // personas = data.filter(p => p.rol && p.rol.toLowerCase() === filtroRol.toLowerCase());
+
       personas.forEach(p => {
+        // Controlar que los valores nulos se muestren como texto vacío
+        const nombre   = p.nombre_persona || '';
+        const cedula   = p.numero_cedula || '';
+        const celular  = p.celular || '';
+        const correo   = p.correo_persona || '';
+        const residente = p.residente || 'No';
+        const perfil   = p.perfil || '';
+
         const fila = `
           <tr>
-            <td>${p.nombre_completo}</td>
-            <td>${p.numero_cedula}</td>
-            <td>${p.celular}</td>
-            <td>${p.correo}</td>
-            <td>${p.casa}</td>
-
+            <td>${nombre}</td>
+            <td>${cedula}</td>
+            <td>${celular}</td>
+            <td>${correo}</td>
             <td>
-              <span class="badge ${p.residente === 'Si' ? 'bg-success' : 'bg-danger'}">
-                ${p.residente}
+              <span class="badge ${residente.toLowerCase() === 'si' ? 'bg-success' : 'bg-danger'}">
+                ${residente}
               </span>
-            <td>${p.rol}</td>
             </td>
+            <td>${perfil}</td>
             <td class="text-center">
-            <div class="d-inline-flex gap-4">
-              <!-- Botón Editar -->
-              <a href="#" class="btn-editar text-primary" data-id_persona="${p.id_persona}">
-              <i class="fas fa-edit"></i>
-              </a>
-              <!-- Botón Borrar -->
-              <a href="#" class="btn-borrar text-danger" data-id_persona="${p.id_persona}">
-              <i class="fas fa-trash"></i>
-              </a>
-            </div>
+              <div class="d-inline-flex gap-4">
+                <!-- Botón Editar -->
+                <a href="#" class="btn-editar text-primary" data-id_persona="${p.id_persona}">
+                  <i class="fas fa-edit"></i>
+                </a>
+                <!-- Botón Borrar -->
+                <a href="#" class="btn-borrar text-danger" data-id_persona="${p.id_persona}">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </div>
             </td>
           </tr>
         `;
         tbody.insertAdjacentHTML("beforeend", fila);
       });
+
+      // Asignar listeners para edición
       document.querySelectorAll(".btn-editar").forEach(btn => {
         btn.addEventListener("click", e => {
           e.preventDefault();
           const id = btn.dataset.id_persona;
-          console.log("ID enviado a editarPersona:", id); // 👈 depuración
+          console.log("ID enviado a editarPersonas:", id);
           editarPersonas(id);
+        });
+      });
+
+      // Asignar listeners para eliminación
+      document.querySelectorAll(".btn-borrar").forEach(btn => {
+        btn.addEventListener("click", e => {
+          e.preventDefault();
+          const id = btn.dataset.id_persona;
+          console.log("ID enviado a eliminarPersonas:", id);
+          eliminarPersonas(id);
         });
       });
     })
@@ -238,9 +260,8 @@ function cargarPersonas(filtroRol = null) {
 //Funcion para editar la persona
 async function editarPersonas(id_persona) {
   console.log("ID enviado:", id_persona);
-
   try {
-    const res = await fetch(`http://127.0.0.1/vezinos_backend/vezinos/buscar_personas.php?id_persona=${id_persona}`);
+    const res = await fetch(`http://127.0.0.1/vezinos_backend/vezinos/personas/buscar.php?id_persona=${id_persona}`);
     const persona = await res.json();
     console.log("persona recibida:", persona); // 👈 Depuración
     // Cargar la vista del formulario
@@ -251,13 +272,13 @@ async function editarPersonas(id_persona) {
     }
     // Rellenar campos después de que el formulario esté en el DOM
     setTimeout(() => {
-      document.getElementById("nombre_completo").value = persona.nombre_completo ?? "";
+      document.getElementById("nombre_persona").value = persona.nombre_persona ?? "";
       document.getElementById("numero_cedula").value = persona.numero_cedula ?? "";
       document.getElementById("celular").value = persona.celular ?? "";
-      document.getElementById("correo").value = persona.correo ?? "";
-      document.getElementById("torre_manzana").value = persona.torre_manzana ?? "";
-      document.getElementById("apartamento").value = persona.apartamento ?? "";
-      document.getElementById("rol").value = persona.rol ?? "";
+      document.getElementById("correo_persona").value = persona.correo_persona ?? "";
+      // document.getElementById("torre_manzana").value = persona.torre_manzana ?? "";
+      // document.getElementById("apartamento").value = persona.apartamento ?? "";
+      document.getElementById("perfil").value = persona.perfil ?? "";
       document.getElementById("residente").value = persona.residente ?? "";
       document.getElementById("id_persona").value = persona.id_persona; // campo oculto
     }, 100);
@@ -265,6 +286,102 @@ async function editarPersonas(id_persona) {
     console.error("Error al editar persona:", err);
   }
 }
+
+//Función para eliminar registro de personas
+async function eliminarPersonas(id_persona) {
+  if (!confirm("¿Seguro que deseas eliminar esta persona?")) return;
+
+  try {
+    const res = await fetch(`http://127.0.0.1/vezinos_backend/vezinos/personas/eliminar.php?id_persona=${id_persona}`, {
+      method: "DELETE"
+    });
+    const data = await res.json();
+    console.log(data);
+
+    if (data.success) {
+      alert("Persona eliminada correctamente");
+      cargarPersonas()
+    } else {
+      alert(data.error);
+    }
+  } catch (err) {
+    console.error("Error al eliminar persona:", err);
+  }
+}
+
+
+//funcion para mostrar datos del conjunto en el select
+// Llamada al PHP que devuelve JSON
+function cargarConjuntos() {
+  fetch('http://127.0.0.1/vezinos_backend/vezinos/conjuntos/buscar.php')
+    .then(response => response.json())
+    .then(data => {
+      console.log("Datos recibidos del backend:", data); // 👈 imprime el array completo
+      const select = document.getElementById('opcion-conjuntos');
+      if (!select) {
+        console.error("No se encontró el select con id='opcion-conjuntos'");
+        return;
+      }
+      data.forEach(c => {
+        console.log("Agregando opción:", c); // 👈 imprime cada objeto antes de insertarlo
+        const option = document.createElement('option');
+        option.value = c.id_conjunto;
+        option.textContent = c.nombre_conjunto;
+        select.appendChild(option);
+      });
+    })
+    .catch(error => console.error('Error cargando conjuntos:', error));
+};
+
+//Función para buscar por cédula
+// Función para buscar por cédula
+function buscarCedula() {
+  const cedulaInput = document.querySelector('input[name="numero_cedula"]');
+  if (!cedulaInput) return;
+
+  cedulaInput.addEventListener("blur", () => {
+    const numeroCedula = cedulaInput.value.trim();
+
+    // 1. Obtener referencias a los campos
+    const inputNombre = document.querySelector('input[name="nombre_persona"]');
+    const inputCorreo = document.querySelector('input[name="correo_persona"]');
+    const inputIdUsuario = document.querySelector('input[name="id_usuario"]');
+
+    // 2. LIMPIEZA PREVIA: Resetea id_usuario antes de hacer la petición
+    if (inputIdUsuario) inputIdUsuario.value = "";
+
+    // Si el campo de cédula está vacío, detiene la ejecución
+    if (!numeroCedula) return;
+
+    fetch("http://127.0.0.1/vezinos_backend/vezinos/personas/buscar_cedula.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: "numero_cedula=" + encodeURIComponent(numeroCedula)
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          // Si ES usuario: autocompleta los campos y asigna la FK
+          if (inputNombre) inputNombre.value = data.data.nombre_completo;
+          if (inputCorreo) inputCorreo.value = data.data.correo;
+          if (inputIdUsuario) inputIdUsuario.value = data.data.id_usuario;
+        } else {
+          // Si NO es usuario: aseguras que id_usuario quede VACÍO y permites digitar manualmente
+          if (inputIdUsuario) inputIdUsuario.value = "";
+          if (inputNombre) inputNombre.value = "";
+          if (inputCorreo) inputCorreo.value = "";
+
+          alert(data.message);
+        }
+      })
+      .catch(err => {
+        console.error("Error en la conexión:", err);
+        if (inputIdUsuario) inputIdUsuario.value = "";
+      });
+  });
+}
+
+  
 
 
 // Llamar la función al cargar la vista
