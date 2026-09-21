@@ -34,12 +34,31 @@ async function cargarVista(vista, evento, filtroRol = null) {
         requestAnimationFrame(() => cargarPersonas(filtroRol));
       }
     }
-    //   else if (vista.includes("modulo-residente")) {
-    //   if (typeof cargarPersonas === "function") {
-    //     requestAnimationFrame(() => cargarPersonas(filtroRol));
-    // }
-    // }
 
+    else if (vista.includes("cantidad-residentes")) {
+      if (typeof guardarViviendas === "function") {
+        guardarViviendas(); // Activa la escucha del formulario de login
+      }
+    }
+    
+else if (vista.includes("asociar-residentes")) {
+  // 1. Cargar las casas en el selector
+  if (typeof cargarCasas === "function") {
+    cargarCasas();
+  }
+
+  // 2. Escuchar el envío del formulario sin acumular listeners
+  const formResidente = document.getElementById("formResidente");
+  if (formResidente) {
+    // Asignar mediante 'onsubmit' reemplaza cualquier listener previo
+    formResidente.onsubmit = function (e) {
+      e.preventDefault(); // Evita la recarga de página
+      if (typeof guardarAsociacionResidente === "function") {
+        guardarAsociacionResidente(this); // Envía el formulario actual
+      }
+    };
+  }
+}
   } catch (error) {
     console.error("Error cargando la vista:", error);
     contenedor.innerHTML = "<p class='text-danger text-center mt-3'>Error al cargar el contenido.</p>";
@@ -68,7 +87,7 @@ function inicializarVistas() {
       return;
     }
     // Enviar al backend
-    fetch("http://127.0.0.1/vezinos_backend/vezinos/usuarios/guardar.php", {
+    fetch("http://127.0.0.1:8080/vezinos_backend/vezinos/usuarios/guardar.php", {
       method: "POST",
       body: formData
     })
@@ -107,13 +126,17 @@ function inicializarLogin() {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       let formData = new FormData(form);
-      fetch("http://127.0.0.1/vezinos_backend/vezinos/usuarios/buscar.php", {
+      fetch("http://127.0.0.1:8080/vezinos_backend/vezinos/usuarios/buscar.php", {
         method: "POST",
         body: formData
       })
         .then(res => res.json())
         .then(data => {
           if (data.status === "success") {
+            // 1. Guardar id_conjunto en localStorage
+            if (data.usuario && data.usuario.id_conjunto) {
+              localStorage.setItem("id_conjunto", data.usuario.id_conjunto);
+            }
             const rol = formData.get("rol").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
             console.log("Rol recibido:", rol);
 
@@ -148,7 +171,7 @@ function inicializarPersonas() {
       e.preventDefault();
       let formData = new FormData(form);
 
-      fetch("http://127.0.0.1/vezinos_backend/vezinos/personas/guardar_editar.php", {
+      fetch("http://127.0.0.1:8080/vezinos_backend/vezinos/personas/guardar_editar.php", {
         method: "POST",
         body: formData
       })
@@ -178,7 +201,7 @@ function cargarPersonas(filtroRol = null) {
     return;
   }
 
-  fetch("http://127.0.0.1/vezinos_backend/vezinos/personas/ver.php")
+  fetch("http://127.0.0.1:8080/vezinos_backend/vezinos/personas/ver.php")
     .then(res => res.json())
     .then(data => {
       tbody.innerHTML = "";
@@ -198,12 +221,12 @@ function cargarPersonas(filtroRol = null) {
 
       personas.forEach(p => {
         // Controlar que los valores nulos se muestren como texto vacío
-        const nombre   = p.nombre_persona || '';
-        const cedula   = p.numero_cedula || '';
-        const celular  = p.celular || '';
-        const correo   = p.correo_persona || '';
+        const nombre = p.nombre_persona || '';
+        const cedula = p.numero_cedula || '';
+        const celular = p.celular || '';
+        const correo = p.correo_persona || '';
         const residente = p.residente || 'No';
-        const perfil   = p.perfil || '';
+        const perfil = p.perfil || '';
 
         const fila = `
           <tr>
@@ -261,7 +284,7 @@ function cargarPersonas(filtroRol = null) {
 async function editarPersonas(id_persona) {
   console.log("ID enviado:", id_persona);
   try {
-    const res = await fetch(`http://127.0.0.1/vezinos_backend/vezinos/personas/buscar.php?id_persona=${id_persona}`);
+    const res = await fetch(`http://127.0.0.1:8080/vezinos_backend/vezinos/personas/buscar.php?id_persona=${id_persona}`);
     const persona = await res.json();
     console.log("persona recibida:", persona); // 👈 Depuración
     // Cargar la vista del formulario
@@ -292,7 +315,7 @@ async function eliminarPersonas(id_persona) {
   if (!confirm("¿Seguro que deseas eliminar esta persona?")) return;
 
   try {
-    const res = await fetch(`http://127.0.0.1/vezinos_backend/vezinos/personas/eliminar.php?id_persona=${id_persona}`, {
+    const res = await fetch(`http://127.0.0.1:8080/vezinos_backend/vezinos/personas/eliminar.php?id_persona=${id_persona}`, {
       method: "DELETE"
     });
     const data = await res.json();
@@ -313,7 +336,7 @@ async function eliminarPersonas(id_persona) {
 //funcion para mostrar datos del conjunto en el select
 // Llamada al PHP que devuelve JSON
 function cargarConjuntos() {
-  fetch('http://127.0.0.1/vezinos_backend/vezinos/conjuntos/buscar.php')
+  fetch('http://127.0.0.1:8080/vezinos_backend/vezinos/conjuntos/buscar.php')
     .then(response => response.json())
     .then(data => {
       console.log("Datos recibidos del backend:", data); // 👈 imprime el array completo
@@ -333,7 +356,6 @@ function cargarConjuntos() {
     .catch(error => console.error('Error cargando conjuntos:', error));
 };
 
-//Función para buscar por cédula
 // Función para buscar por cédula
 function buscarCedula() {
   const cedulaInput = document.querySelector('input[name="numero_cedula"]');
@@ -353,7 +375,7 @@ function buscarCedula() {
     // Si el campo de cédula está vacío, detiene la ejecución
     if (!numeroCedula) return;
 
-    fetch("http://127.0.0.1/vezinos_backend/vezinos/personas/buscar_cedula.php", {
+    fetch("http://127.0.0.1:8080/vezinos_backend/vezinos/personas/buscar_cedula.php", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: "numero_cedula=" + encodeURIComponent(numeroCedula)
@@ -381,7 +403,119 @@ function buscarCedula() {
   });
 }
 
+function guardarViviendas() {
+  const formViviendas = document.getElementById("form-vivienda"); // Asegúrate de que este ID coincida con tu <form>
+  if (!formViviendas) return;
+
+  // Asignamos onsubmit para prevenir acumular múltiples listeners si vuelve a cargar la vista
+  formViviendas.onsubmit = async function (e) {
+    e.preventDefault();
+
+    // Capturamos los datos automáticamente del formulario
+    const formData = new FormData(formViviendas);
+
+    
+      // OPCIONAL: Si 'id_conjunto' no viene dentro de un campo hidden o input del formulario, 
+      // puedes asignarlo manualmente antes de enviar, por ejemplo desde localStorage/sesión:
+      
+      const idConjunto = localStorage.getItem("id_conjunto") || 1;
+      formData.append("id_conjunto", idConjunto);
   
+
+    try {
+      const respuesta = await fetch("http://127.0.0.1:8080/vezinos_backend/vezinos/viviendas/guardar.php", {
+        method: "POST",
+        body: formData // Envía los datos como multipart/form-data compatible con $_POST
+      });
+
+      if (!respuesta.ok) {
+        throw new Error(`Error en la red/servidor: ${respuesta.status}`);
+      }
+
+      const resultado = await respuesta.json();
+
+      if (resultado.status === "success") {
+        alert(resultado.message); // O reemplaza con una alerta personalizada (SweetAlert/Bootstrap)
+        formViviendas.reset(); // Limpia los campos del formulario tras guardar correctamente
+      } else {
+        alert(`Atención: ${resultado.message}`);
+      }
+
+    } catch (error) {
+      console.error("Error al guardar la vivienda:", error);
+      alert("Ocurrió un problema al intentar guardar la vivienda.");
+    }
+  };
+}
+
+// function guardarAsociacionResidente() {
+//   cargarCasas()
+//   fetch("http://127.0.0.1:8080/vezinos_backend/vezinos/personas/guardar_editar.php", {
+//     method: "POST",
+//     body: formData
+//   })
+//     .then(res => res.json())
+//     .then(data => {
+//       alert(data.message);
+//       if (data.status === "success") {
+//         formElement.reset();
+//       }
+//     })
+//     .catch(err => console.error("Error al asociar residente:", err));
+// }
+
+
+// 1. Cargar las casas desde el backend
+function cargarCasas() {
+  const select = document.getElementById("id_vivienda");
+  if (!select) return;
+
+  fetch("http://127.0.0.1:8080/vezinos_backend/vezinos/viviendas/buscar.php")
+    .then(res => res.json())
+    .then(data => {
+      select.innerHTML = '<option value="">-- Seleccione una casa --</option>';
+
+      if (Array.isArray(data)) {
+        data.forEach(casa => {
+          const option = document.createElement("option");
+          option.value = casa.id_vivienda;
+          option.textContent = `${casa.numero_casa}`;
+          select.appendChild(option);
+        });
+      }
+    })
+    .catch(err => console.error("Error al cargar viviendas:", err));
+}
+
+// 2. Guardar los datos en la tabla 'personas'
+async function guardarAsociacionResidente(formElement) {
+  const formData = new FormData(formElement);
+
+  try {
+    const res = await fetch("http://127.0.0.1:8080/vezinos_backend/vezinos/personas/guardar_editar.php", {
+      method: "POST",
+      body: formData
+    });
+
+    // 1. Leemos la respuesta como texto primero para diagnosticar
+    const textoRespuesta = await res.text();
+
+    try {
+      // 2. Intentamos convertir a JSON
+      const data = JSON.parse(textoRespuesta);
+      alert(data.message);
+      if (data.status === "success") formElement.reset();
+    } catch (e) {
+      // 3. Si falla, mostramos en consola el error HTML real que mandó PHP
+      console.error("PHP devolvió HTML/Error en lugar de JSON:");
+      console.log(textoRespuesta);
+      alert("Error en el servidor PHP. Revisa la consola del navegador (F12).");
+    }
+
+  } catch (err) {
+    console.error("Error de red o conexión:", err);
+  }
+}
 
 
 // Llamar la función al cargar la vista
