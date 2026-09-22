@@ -27,11 +27,11 @@
 
     <nav>
       <ul>
-        <li><a href="#" onclick="cargarVista('inicio')">Inicio</a></li>
-        <li><a href="#" onclick="cargarVista('conocenos')">Conocenos</a></li>
-        <li><a href="#" onclick="cargarVista('ayuda')">Ayuda</a></li>
-        <li><a href="#" onclick="cargarVista('pages/samples/login')">Ingresar</a></li>
-        <li><a href="#" onclick="cargarVista('pages/samples/register', event)">Registrarse</a></li>
+        <li><a href="#" onclick="cargarVista('modulo_bienvenida/inicio')">Inicio</a></li>
+        <li><a href="#" onclick="cargarVista('modulo_bienvenida/conocenos')">Conocenos</a></li>
+        <li><a href="#" onclick="cargarVista('modulo_bienvenida/ayuda')">Ayuda</a></li>
+        <li><a href="#" onclick="cargarVista('modulo_usuarios/ingresar')">Ingresar</a></li>
+        <li><a href="#" onclick="cargarVista('modulo_usuarios/registrar', event)">Registrarse</a></li>
       </ul>
     </nav>
     <main id="contenido">
@@ -50,7 +50,7 @@
         }
       }
       // Cargar vista inicial al abrir la página
-      cargarVista('inicio');
+      cargarVista('modulo_bienvenida/inicio');
     </script>
 
     <footer class="mt-4">

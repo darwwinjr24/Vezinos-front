@@ -16,45 +16,54 @@
     <div class="content-wrapper">
       <div class="row">
         <div class="col-sm-6">
-          <a><img src="images/conj4.png"
+          <a><img src="../images/conj4.png"
               style="height: 100px;; width:auto;display:inline-block; vertical-align:middle;" /></a>
           <h3 class="mb-0 font-weight-bold" style="margin-top: 1cm;">Conjunto Trapiches</h3>
           <p>Calle 25 # 2-90</p>
         </div>
       </div>
       <div class="container-fluid" ;>
-        <form id="propietario">
-          <input type="hidden" id="propietario_id" name="id">
+        <form id="personas">
           <div class="formulario">
             <h2>Registrar propietario</h2>
 
             <!-- Input de texto -->
-            <label for="">Nombre completo:</label>
-            <input type="text" id="nombre" placeholder="Escribe tu nombre" name="nombre">
 
+            <input type="hidden" id="id_persona" name="id_persona"> <!-- campo oculto -->
+            <input type="hidden" id="id_usuario_form" name="id_usuario"> <!-- campo oculto -->
             <label for="">Numero de la cédula:</label>
             <input type="number" id="numero_cedula" placeholder="Ej: 88956417" name="numero_cedula">
 
+            <label for="">Nombre completo:</label>
+            <input type="text" id="nombre_persona" placeholder="Escribe tu nombre" name="nombre_persona">
+
             <label for="">Correo electrónico:</label>
-            <input type="text" id="correo" placeholder="Ej: luismedina34@outlook.com" name="correo">
+            <input type="text" id="correo_persona" placeholder="Ej: luismedina34@outlook.com" name="correo_persona">
 
             <!-- Input numérico -->
             <label for="">Numero de Celular:</label>
             <input type="" id="celular" placeholder="Ej: 3108569300" name="celular">
 
-
-            <label for="">Numero de la casa o apartamento:</label>
-            <div class="numero">
-              <input type="text" id="torre_manzana" name="torre_manzana" placeholder="Torre o Manzana">
-              <input type="number" id="apartamento" name="apartamento" placeholder="Numero">
-            </div>
-
             <!-- Input de opción (select) -->
+            <label for="">Rol:</label>
+            <select id="perfil" name="perfil">
+              <option value="propietario">Propietario</option>
+            </select>
+
             <label for="">Reside en el conjunto:</label>
             <select id="residente" name="residente">
               <option value="Si">Si</option>
               <option value="No">No</option>
             </select>
+
+            <!-- <label for="">Edad</label>
+            <input type="number" id="edad" placeholder="Ej: 3108569300" name="edad">
+
+            <label for="">Sexo</label>
+            <select id="sexo" name="sexo">
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+            </select> -->
 
             <!-- Botón -->
             <div class="botones">
@@ -66,18 +75,7 @@
       </div>
     </div>
   </div>
-
-  <script src="vendors/js/vendor.bundle.base.js"></script>
-  <script src="js/off-canvas.js"></script>
-  <script src="js/hoverable-collapse.js"></script>
-  <script src="js/template.js"></script>
-  <script src="js/settings.js"></script>
-  <script src="js/todolist.js"></script>
-  <script src="vendors/progressbar.js/progressbar.min.js"></script>
-  <script src="vendors/chart.js/Chart.min.js"></script>
-  <script src="js/dashboard.js"></script>
-  <script src="app.js"></script>
-
+  <script src="../app.js"></script>
 </body>
 
 <style>
