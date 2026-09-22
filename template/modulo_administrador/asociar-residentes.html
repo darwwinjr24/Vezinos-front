@@ -27,12 +27,17 @@
                 <form id="formResidente" class="formulario">
                     <h2>Asociar Residentes</h2>
                     <input type="hidden" id="id_persona" name="id_persona" value="" />
-                    <input type="hidden" id="id_usuario" name="id_usuario" value="" />
+                    <input type="hidden" id="modal_id_usuario" name="id_usuario" value="" />
 
 
                     <label for="id_vivienda">Número de Casa</label>
                     <select id="id_vivienda" name="id_vivienda" required>
                         <option value="">Cargando casas...</option>
+                    </select>
+
+                    <label for="buscar_usuario">Usuario a asociar</label>
+                    <select id="buscar_usuario">
+                        <option value="">-- Seleccione un usuario --</option>
                     </select>
 
                     <label for="nombre_persona">Nombre completo</label>

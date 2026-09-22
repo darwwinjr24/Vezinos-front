@@ -40,25 +40,28 @@ async function cargarVista(vista, evento, filtroRol = null) {
         guardarViviendas(); // Activa la escucha del formulario de login
       }
     }
-    
-else if (vista.includes("asociar-residentes")) {
-  // 1. Cargar las casas en el selector
-  if (typeof cargarCasas === "function") {
-    cargarCasas();
-  }
 
-  // 2. Escuchar el envío del formulario sin acumular listeners
-  const formResidente = document.getElementById("formResidente");
-  if (formResidente) {
-    // Asignar mediante 'onsubmit' reemplaza cualquier listener previo
-    formResidente.onsubmit = function (e) {
-      e.preventDefault(); // Evita la recarga de página
-      if (typeof guardarAsociacionResidente === "function") {
-        guardarAsociacionResidente(this); // Envía el formulario actual
+    else if (vista.includes("asociar-residentes")) {
+      // 1. Cargar las casas en el selector
+      if (typeof cargarCasas === "function") {
+        cargarCasas();
       }
-    };
-  }
-}
+      if (typeof cargarUsuarios === "function") {
+        cargarUsuarios();
+      }
+
+      // 2. Escuchar el envío del formulario sin acumular listeners
+      const formResidente = document.getElementById("formResidente");
+      if (formResidente) {
+        // Asignar mediante 'onsubmit' reemplaza cualquier listener previo
+        formResidente.onsubmit = function (e) {
+          e.preventDefault(); // Evita la recarga de página
+          if (typeof guardarAsociacionResidente === "function") {
+            guardarAsociacionResidente(this); // Envía el formulario actual
+          }
+        };
+      }
+    }
   } catch (error) {
     console.error("Error cargando la vista:", error);
     contenedor.innerHTML = "<p class='text-danger text-center mt-3'>Error al cargar el contenido.</p>";
@@ -196,6 +199,7 @@ function cargarPersonas(filtroRol = null) {
 
   const contenedor = document.getElementById("contenido");
   const tbody = contenedor.querySelector("#tabla-personas");
+  const titulo = document.getElementById("titulo-lista");
   if (!tbody) {
     console.warn("No existe la tabla de personas en esta vista");
     return;
@@ -211,12 +215,16 @@ function cargarPersonas(filtroRol = null) {
         if (filtroRol.toLowerCase() === "propietario") {
           // 🔎 Filtrar por rol propietario
           personas = data.filter(p => p.perfil && p.perfil.toLowerCase() === "propietario");
+          if (titulo) titulo.textContent = "LISTADO DE PROPIETARIOS";
         } else if (filtroRol.toLowerCase() === "arrendatario") {
           // 🔎 Filtrar por rol arrendatario Y residente = "Si"
           personas = data.filter(p =>
             p.residente && p.residente.trim().toLowerCase() === "si"
           );
+          if (titulo) titulo.textContent = "LISTADO DE ARRENDATARIOS";
         }
+      } else {
+        if (titulo) titulo.textContent = "LISTADO DE PERSONAS";
       }
 
       personas.forEach(p => {
@@ -227,6 +235,9 @@ function cargarPersonas(filtroRol = null) {
         const correo = p.correo_persona || '';
         const residente = p.residente || 'No';
         const perfil = p.perfil || '';
+
+        // 🔹 Nuevo campo únicamente para número de casa
+        const numeroCasa = p.numero_casa || '';
 
         const fila = `
           <tr>
@@ -240,6 +251,8 @@ function cargarPersonas(filtroRol = null) {
               </span>
             </td>
             <td>${perfil}</td>
+            <!-- 🔹 Celda con número de casa -->
+            <td>${numeroCasa}</td>
             <td class="text-center">
               <div class="d-inline-flex gap-4">
                 <!-- Botón Editar -->
@@ -258,7 +271,7 @@ function cargarPersonas(filtroRol = null) {
       });
 
       // Asignar listeners para edición
-      document.querySelectorAll(".btn-editar").forEach(btn => {
+      tbody.querySelectorAll(".btn-editar").forEach(btn => {
         btn.addEventListener("click", e => {
           e.preventDefault();
           const id = btn.dataset.id_persona;
@@ -268,7 +281,7 @@ function cargarPersonas(filtroRol = null) {
       });
 
       // Asignar listeners para eliminación
-      document.querySelectorAll(".btn-borrar").forEach(btn => {
+      tbody.querySelectorAll(".btn-borrar").forEach(btn => {
         btn.addEventListener("click", e => {
           e.preventDefault();
           const id = btn.dataset.id_persona;
@@ -288,7 +301,7 @@ async function editarPersonas(id_persona) {
     const persona = await res.json();
     console.log("persona recibida:", persona); // 👈 Depuración
     // Cargar la vista del formulario
-    if (persona.rol && persona.rol.toLowerCase() === "arrendatario") {
+    if (persona.perfil && persona.perfil.toLowerCase() === "arrendatario") {
       await cargarVista("formulario-residente");
     } else {
       await cargarVista("formulario-propietario");
@@ -299,11 +312,10 @@ async function editarPersonas(id_persona) {
       document.getElementById("numero_cedula").value = persona.numero_cedula ?? "";
       document.getElementById("celular").value = persona.celular ?? "";
       document.getElementById("correo_persona").value = persona.correo_persona ?? "";
-      // document.getElementById("torre_manzana").value = persona.torre_manzana ?? "";
-      // document.getElementById("apartamento").value = persona.apartamento ?? "";
       document.getElementById("perfil").value = persona.perfil ?? "";
       document.getElementById("residente").value = persona.residente ?? "";
-      document.getElementById("id_persona").value = persona.id_persona; // campo oculto
+      document.getElementById("id_persona").value = persona.id_persona;
+      document.getElementById("id_usuario_form").value = persona.id_usuario ?? ""; // 👈 nuevo
     }, 100);
   } catch (err) {
     console.error("Error al editar persona:", err);
@@ -414,13 +426,13 @@ function guardarViviendas() {
     // Capturamos los datos automáticamente del formulario
     const formData = new FormData(formViviendas);
 
-    
-      // OPCIONAL: Si 'id_conjunto' no viene dentro de un campo hidden o input del formulario, 
-      // puedes asignarlo manualmente antes de enviar, por ejemplo desde localStorage/sesión:
-      
-      const idConjunto = localStorage.getItem("id_conjunto") || 1;
-      formData.append("id_conjunto", idConjunto);
-  
+
+    // OPCIONAL: Si 'id_conjunto' no viene dentro de un campo hidden o input del formulario, 
+    // puedes asignarlo manualmente antes de enviar, por ejemplo desde localStorage/sesión:
+
+    const idConjunto = localStorage.getItem("id_conjunto") || 1;
+    formData.append("id_conjunto", idConjunto);
+
 
     try {
       const respuesta = await fetch("http://127.0.0.1:8080/vezinos_backend/vezinos/viviendas/guardar.php", {
@@ -492,7 +504,7 @@ async function guardarAsociacionResidente(formElement) {
   const formData = new FormData(formElement);
 
   try {
-    const res = await fetch("http://127.0.0.1:8080/vezinos_backend/vezinos/personas/guardar_editar.php", {
+    const res = await fetch("http://127.0.0.1:8080/vezinos_backend/vezinos/viviendas/asociar.php", {
       method: "POST",
       body: formData
     });
@@ -517,6 +529,53 @@ async function guardarAsociacionResidente(formElement) {
   }
 }
 
+async function cargarUsuarios() {
+  const select = document.getElementById("buscar_usuario");
+  if (!select) return;
+
+  try {
+    const res = await fetch("http://127.0.0.1:8080/vezinos_backend/vezinos/usuarios/ver.php");
+    const usuarios = await res.json();
+
+    if (!Array.isArray(usuarios)) {
+      console.error("Respuesta inesperada al cargar usuarios:", usuarios);
+      return;
+    }
+
+    select.innerHTML = '<option value="">-- Nuevo residente (sin usuario) --</option>';
+
+    usuarios.forEach(u => {
+      const opt = document.createElement("option");
+      opt.value = u.id_usuario;
+      opt.textContent = u.nombre_completo ?? 'Sin nombre';
+      opt.dataset.nombre = u.nombre_completo ?? '';
+      select.appendChild(opt);
+    });
+
+    select.addEventListener("change", () => {
+      const opcionSeleccionada = select.options[select.selectedIndex];
+      const inputNombre = document.getElementById("nombre_persona");
+
+      document.getElementById("modal_id_usuario").value = select.value;
+
+      if (select.value === "") {
+        // "Nuevo residente" seleccionado: liberar el campo para escribir a mano
+        if (inputNombre) {
+          inputNombre.readOnly = false;
+          inputNombre.value = "";
+        }
+      } else {
+        // Usuario existente seleccionado: autocompletar
+        if (inputNombre) {
+          inputNombre.value = opcionSeleccionada.dataset.nombre || "";
+        }
+      }
+    });
+
+  } catch (err) {
+    console.error("Error cargando usuarios:", err);
+  }
+}
 
 // Llamar la función al cargar la vista
 document.addEventListener("DOMContentLoaded", cargarPersonas);
@@ -655,4 +714,3 @@ function inicializarGraficos() {
   modal.show();
   //prueba final 
 }
-
